@@ -43,12 +43,14 @@ main {
   font-family: "Inter", sans-serif;
 }
 
-.color-pallet, .color-values {
+.color-pallet-container, .color-values {
   display: flex;
   text-align: center;
 }
 
-.color-sample, .color-value {
+.color-and-hex {
+  display: flex;
+  flex-direction: column;
   width: 20%;
 }
 

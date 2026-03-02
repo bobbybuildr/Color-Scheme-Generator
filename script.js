@@ -1,14 +1,14 @@
 const modeChoices = ['monochrome', 'monochrome-dark', 'monochrome-light', 'analogic', 'complement', 'analogic-complement', 'triad', 'quad']
 const modeSelector = document.getElementById('mode-selector')
 const getColorSchemeBtn = document.getElementById('get-color-scheme-btn')
-const colorPallet = document.querySelector('.color-pallet')
+const colorPalletContainer = document.querySelector('.color-pallet-container')
 const colorValues = document.querySelector('.color-values')
 
 
 getColorSchemeBtn.addEventListener('click', () => {
   const selectedColor = document.getElementById('color-selector').value.slice(1)
   const selectedMode = document.getElementById('mode-selector').value
-  colorPallet.innerHTML = ""
+  colorPalletContainer.innerHTML = ""
   fetchAndDisplayColors(selectedColor, selectedMode)
 })
 
@@ -29,18 +29,21 @@ fetch(`https://www.thecolorapi.com/scheme?hex=${hexVal}&mode=${mode}&count=5`)
   .then(res => res.json())
   .then(data => {
     data.colors.forEach((color) => {
-      const newEl = document.createElement('div')
-      newEl.classList.add('color-sample')
-      newEl.style.backgroundColor = color.hex.value
-      colorPallet.appendChild(newEl)
-    })
+      const colorAndHexContainer = document.createElement('div')
+      const colorEl = document.createElement('div')
+      const hexEl = document.createElement('div')
 
-    const colorValuesHtml = data.colors.map((color) => {
-      return `
-      <div class="color-value">${color.hex.value}</div>
-      `
-    }).join('')
-    colorValues.innerHTML = colorValuesHtml
+      colorAndHexContainer.classList.add('color-and-hex')
+      colorEl.classList.add('color-sample')
+      hexEl.classList.add('color-value')
+
+      colorEl.style.backgroundColor = color.hex.value
+      hexEl.textContent = color.hex.value
+
+      colorAndHexContainer.appendChild(colorEl)
+      colorAndHexContainer.appendChild(hexEl)
+      colorPalletContainer.appendChild(colorAndHexContainer)
+    })
   })
 }
 
