@@ -3,7 +3,8 @@ const modeSelector = document.getElementById('mode-selector')
 const getColorSchemeBtn = document.getElementById('get-color-scheme-btn')
 const colorPalletContainer = document.querySelector('.color-pallet-container')
 const colorValues = document.querySelector('.color-values')
-
+const clickToCopy = document.getElementById('click-to-copy')
+const clickToCopyText = 'Click color to copy'
 
 getColorSchemeBtn.addEventListener('click', () => {
   const selectedColor = document.getElementById('color-selector').value.slice(1)
@@ -11,8 +12,6 @@ getColorSchemeBtn.addEventListener('click', () => {
   colorPalletContainer.innerHTML = ""
   fetchAndDisplayColors(selectedColor, selectedMode)
 })
-
-
 
 const setModeChoices = () => {
   let html = ""
@@ -24,11 +23,14 @@ const setModeChoices = () => {
   modeSelector.innerHTML = html
 }
 
-const fetchAndDisplayColors = (hexVal, mode) => {
-fetch(`https://www.thecolorapi.com/scheme?hex=${hexVal}&mode=${mode}&count=5`)
-  .then(res => res.json())
-  .then(data => {
+const fetchAndDisplayColors = (hexVal, mode, count = 5) => {
+  fetch(`https://www.thecolorapi.com/scheme?hex=${hexVal}&mode=${mode}&count=${count}`)
+    .then(res => res.json())
+    .then(data => {
+    clickToCopy.textContent = clickToCopyText
+    let copyTextTimer
     data.colors.forEach((color) => {
+      const colorHexValue = color.hex.value
       const colorAndHexContainer = document.createElement('div')
       const colorEl = document.createElement('div')
       const hexEl = document.createElement('div')
@@ -37,8 +39,17 @@ fetch(`https://www.thecolorapi.com/scheme?hex=${hexVal}&mode=${mode}&count=5`)
       colorEl.classList.add('color-sample')
       hexEl.classList.add('color-value')
 
-      colorEl.style.backgroundColor = color.hex.value
-      hexEl.textContent = color.hex.value
+      colorEl.style.backgroundColor = colorHexValue
+      hexEl.textContent = colorHexValue
+
+      colorAndHexContainer.addEventListener('click', () => {
+        if (copyTextTimer) { clearTimeout(copyTextTimer) }
+        navigator.clipboard.writeText(colorHexValue)
+        clickToCopy.textContent = `Copied: ${colorHexValue}`
+        copyTextTimer = setTimeout(() => {
+          clickToCopy.textContent = clickToCopyText
+        }, 2000)
+      })
 
       colorAndHexContainer.appendChild(colorEl)
       colorAndHexContainer.appendChild(hexEl)
@@ -48,3 +59,7 @@ fetch(`https://www.thecolorapi.com/scheme?hex=${hexVal}&mode=${mode}&count=5`)
 }
 
 setModeChoices()
+fetchAndDisplayColors(
+  document.getElementById('color-selector').value.slice(1), 
+  document.getElementById('mode-selector').value
+)

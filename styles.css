@@ -2,15 +2,35 @@
   box-sizing: border-box;
 }
 
+/* Layout */
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
+  background-color: #1F2937;
+  color: #fff;
+}
+
+header, main {
+  width: 95vw;
+  max-width: 600px;
+}
+
+header {
+  margin: 0 auto;
 }
 
 main {
-  width: 95vw;
-  max-width: 600px;
   margin: 10px auto;
+  text-align: center;
+}
+
+/* Content */
+
+header h1 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -1px;
 }
 
 .selection-section {
@@ -22,40 +42,52 @@ main {
 }
 
 #color-selector {
-  border: 0;
+  padding: 0;
+  border: 2px solid #fff;
+  border-radius: 5px;
   height: auto;
+  cursor: pointer;
 }
 
 #mode-selector {
+  background-color: transparent;
+  color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   width: 50%;
   font-family: "Inter", sans-serif;
   text-transform: capitalize;
+  cursor: pointer;
+}
+
+#mode-selector option {
+  background-color: #1F2937;
+  color: #fff;
 }
 
 #get-color-scheme-btn {
   margin-left: auto;
-  background: #fff;
-  color: #333;
+  background: transparent;
+  color: #fff;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-family: "Inter", sans-serif;
+  cursor: pointer;
 }
 
-.color-pallet-container, .color-values {
+.color-pallet-container {
   display: flex;
-  text-align: center;
 }
 
 .color-and-hex {
   display: flex;
   flex-direction: column;
-  width: 20%;
+  flex: 1;
+  cursor: pointer;
 }
 
 .color-sample {
-  height: 400px;
+  height: 50vh;
 }
 
 .color-value {
@@ -63,6 +95,48 @@ main {
   font-size: 0.63rem;
   font-weight: 600;
 }
+
+#click-to-copy {
+  margin-top: 0.25em;
+  font-weight: 200;
+}
+
+footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1em;
+}
+
+footer p {
+    margin: 0 0 0.7em 0;
+}
+
+.social-links {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+}
+.social-links > li {
+  list-style: none;
+  padding: 0 0.5em;
+  display: flex;
+}
+.social-links > li > a {
+  text-decoration: none;
+}
+.social-links > li > a > img {
+  width: 25px;
+  transition: transform 0.2s ease;
+}
+.social-links > li > a > img:hover {
+  transform: scale(1.2);
+}
+
+/* Media Queries */
 
 @media (min-width: 420px) {
   .color-value {
