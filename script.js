@@ -8,6 +8,7 @@ const colorValues = document.querySelector('.color-values')
 getColorSchemeBtn.addEventListener('click', () => {
   const selectedColor = document.getElementById('color-selector').value.slice(1)
   const selectedMode = document.getElementById('mode-selector').value
+  colorPallet.innerHTML = ""
   fetchAndDisplayColors(selectedColor, selectedMode)
 })
 
